@@ -4,7 +4,7 @@ import { eyeOffset, frontBody } from '../app/body.js';
 
 const close = (a, b) => assert.ok(Math.abs(a - b) < 1e-9, `${a} != ${b}`);
 close(eyeOffset('standing', 1.65), 1.5345);
-close(eyeOffset('seated', 1.65), 0.42 + 0.726);
+close(eyeOffset('seated', 1.65), 0.42 + 1.65 * 0.47);
 close(eyeOffset('wheelchair', 1.9), 1.18); // 휠체어는 키와 무관
 assert.ok(eyeOffset('seated', 1.4) < eyeOffset('seated', 1.9)); // 키가 클수록 눈이 높다
 for (const p of ['standing', 'seated']) {
