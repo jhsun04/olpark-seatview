@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>올팍 좌석뷰 | 내 자리에서 본 무대</title>
+<meta name="description" content="한국체육산업개발 공공데이터(공연장 실감형 콘텐츠·공연정보·주차 데이터)로 만든 올림픽공원 공연장 좌석 시야 미리보기">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">{"imports":{"three":"./vendor/three/three.module.js","three/addons/":"./vendor/three/addons/","three-mesh-bvh":"./vendor/three-mesh-bvh.module.js"}}</script>
+</head>
+<body>
+<header class="bar">
+  <h1>올팍 좌석뷰</h1>
+  <label>공연장
+    <select id="venue">
+      <option value="kspodome">KSPO DOME</option>
+      <option value="arena">티켓링크 라이브 아레나</option>
+    </select>
+  </label>
+  <label>무대 배치
+    <select id="stage">
+      <option value="end0">엔드 스테이지 A</option>
+      <option value="end90">엔드 스테이지 B</option>
+      <option value="end180">엔드 스테이지 C</option>
+      <option value="end270">엔드 스테이지 D</option>
+      <option value="center">센터 스테이지</option>
+    </select>
+  </label>
+  <button id="overview" type="button">전체 보기</button>
+</header>
+
+<main>
+  <div id="view" aria-label="3D 공연장 화면"></div>
+  <div id="loading" role="status">3D 공연장을 불러오는 중…</div>
+  <p id="hint" class="hint">공연장에서 내 좌석 위치를 눌러 보세요. 그 자리에서 보이는 무대를 보여 드려요.</p>
+
+  <aside id="panel" aria-live="polite">
+    <section>
+      <h2>내 관람 조건</h2>
+      <div class="seg" role="group" aria-label="관람 자세">
+        <button type="button" data-posture="seated">앉아서</button>
+        <button type="button" data-posture="standing">서서</button>
+        <button type="button" data-posture="wheelchair">휠체어</button>
+      </div>
+      <div id="height-row">
+        <label for="height" class="row">내 키 <b><span id="height-val">165</span>cm</b></label>
+        <input type="range" id="height" min="120" max="195" step="1" value="165">
+        <div class="chips">
+          <button type="button" data-height="135">어린이 135</button>
+          <button type="button" data-height="155">155</button>
+          <button type="button" data-height="165">165</button>
+          <button type="button" data-height="180">180</button>
+        </div>
+      </div>
+      <label class="row">바로 앞사람 키
+        <select id="front">
+          <option value="0">없음</option>
+          <option value="160">키 160cm</option>
+          <option value="170">키 170cm</option>
+          <option value="185">키 185cm</option>
+        </select>
+      </label>
+    </section>
+    <section>
+      <h2>대표 좌석</h2>
+      <div id="presets" class="chips"></div>
+    </section>
+    <section id="result" hidden>
+      <h2>이 자리에서는</h2>
+      <dl>
+        <dt>무대까지 거리</dt><dd id="m-dist">-</dd>
+        <dt>무대 위 공연자가 보이는 정도</dt><dd id="m-stage">-</dd>
+        <dt>스크린이 보이는 정도</dt><dd id="m-screen">-</dd>
+      </dl>
+      <p id="m-text" class="note"></p>
+      <p id="m-eye" class="small"></p>
+      <button id="share" type="button">이 자리 링크 복사</button>
+    </section>
+    <section id="visit">
+      <h2>공연 날 주차·혼잡 안내</h2>
+      <label class="row" for="show-q">2025 공연 찾기</label>
+      <input id="show-q" list="show-list" placeholder="공연 이름 입력" autocomplete="off">
+      <datalist id="show-list"></datalist>
+      <p id="show-info" class="note"></p>
+      <figure id="park-chart" aria-label="시간대별 주차 차량 수 그래프"></figure>
+      <p id="park-text" class="note"></p>
+      <p id="zone-text" class="small"></p>
+    </section>
+    <section class="small">
+      <p>빨간 상자는 가상 무대, 파란 판은 가상 스크린, 보라색은 가상의 앞사람이에요. 실제 공연의 무대·음향 장비는 반영되지 않아요.</p>
+      <p>눈높이는 키에 따른 근사값이에요(서서 키의 약 93%, 앉아서 의자 42cm + 키의 약 44%, 휠체어 약 118cm).</p>
+      <p>데이터: <span id="src"></span></p>
+    </section>
+  </aside>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>

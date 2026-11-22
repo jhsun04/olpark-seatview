@@ -1,0 +1,50 @@
+// 공연장별 설정. 좌표 단위는 m (한국체육산업개발 실감형 콘텐츠 모델 기준).
+// center: 경기장 바닥 중심, floorY: 플로어 높이, ceilY: 좌석 높이를 찾을 때 레이를 쏘는 시작 높이,
+// stageDist: 중심에서 엔드 스테이지 중심까지 거리, clipY: 전체 보기에서 이 높이 위(지붕)를 잘라 냄
+export const VENUES = {
+  kspodome: {
+    name: 'KSPO DOME',
+    alias: ['KSPO DOME', '체조경기장', 'KSPO돔', '케이스포돔'],
+    model: 'models/kspodome.glb',
+    source: '한국체육산업개발 「올림픽공원 공연장 실감형 콘텐츠」 (KSPO DOME, DAE)',
+    center: [105.4, -71.5],
+    floorY: 0,
+    ceilY: 13.2,
+    stageDist: 17,
+    stage: { w: 22, d: 12, h: 1.8 },
+    screen: { w: 18, h: 8, back: 6 },
+    clipY: 17.5,
+    presets: [
+      { label: '플로어(스탠딩)', r: 6, a: 180 },
+      { label: '아래 객석 정면 앞', r: 30, a: 180 },
+      { label: '아래 객석 정면 뒤', r: 42, a: 180 },
+      { label: '위 객석 정면', r: 51, a: 180 },
+      { label: '아래 객석 측면', r: 34, a: 95 },
+      { label: '위 객석 측면', r: 51, a: 95 },
+      { label: '무대 옆 사이드', r: 30, a: 45 },
+    ],
+  },
+  arena: {
+    name: '티켓링크 라이브 아레나',
+    alias: ['티켓링크 라이브 아레나', '핸드볼경기장', 'SK핸드볼경기장', '라이브 아레나'],
+    model: 'models/arena.glb',
+    source: '한국체육산업개발 「올림픽공원 공연장 실감형 콘텐츠」 (SK핸드볼경기장, GLB)',
+    center: [1.5, 0.2],
+    floorY: -1.3,
+    ceilY: 16.5,
+    stageDist: 22,
+    stage: { w: 18, d: 10, h: 1.8 },
+    screen: { w: 14, h: 7, back: 5 },
+    clipY: 15,
+    presets: [
+      // 이 모델은 지붕 덮개가 없고 조명 트러스가 객석 위에 있어, 좌석 면 높이(y)를 측정해 지정함
+      { label: '플로어(스탠딩)', r: 8, a: 180, y: -1.3 },
+      { label: '아래 객석 정면 앞', r: 29, a: 180, y: 1.9 },
+      { label: '아래 객석 정면 뒤', r: 33, a: 180, y: 4.6 },
+      { label: '아래 객석 측면 앞', r: 29, a: 90, y: 5.1 },
+      { label: '아래 객석 측면 뒤', r: 33, a: 90, y: 7.8 },
+      { label: '위 객석 측면', r: 37, a: 90, y: 11.9 },
+      { label: '위 객석 측면 끝', r: 45, a: 90, y: 13.9 },
+    ],
+  },
+};
